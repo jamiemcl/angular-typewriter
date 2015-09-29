@@ -2,7 +2,6 @@ angular.module("nate.util", [])
 .directive("resizeable", [function(){
   return {
     restrict: "EA",
-    template:"<div class='resizeableShape'><div class='boundary'><div class='innerContent'></div></div></div>",
     scope:[],
     link: function(scope, element, attrs){
       console.log("Directive...");
