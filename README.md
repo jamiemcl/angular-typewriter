@@ -3,6 +3,8 @@
 
 A SLIMMED DOWN VERSION OF THE ORIGINAL PLUGIN - TO MAKE IT SIMPLER AND ONLY TO BE USED WITH ARRAYS. 
 
+Also added functionality to add font-awesome/glyphicons within the sentences that are added through an array. 
+
 <img src="http://i359.photobucket.com/albums/oo37/Nate_Cheng/Screen%20Shot%202015-08-12%20at%2011.15.04%20PM_zpsdx0hneoq.png" width="70%">  
 
 <b>Prerequisites:</b> angular.js
