@@ -28,7 +28,7 @@ angular.module("nate.util", [])
       
         scope.typeSpeed = scope.typeSpeed || 100;
         scope.loopDelay = scope.loopDelay || 2000;
-        scope.cursor = scope.cursor || true;;
+        scope.cursor = scope.cursor || true;
         
         if(scope.cursor){
           var contentCursor = angular.element('<span class="cursor"> |</span>');
@@ -36,21 +36,37 @@ angular.module("nate.util", [])
           $compile(contentCursor)(scope);
         }
         
-        scope.typewrite_msgs = function(element, text_array, array_idx, n, loop){
-          if(n<text_array[array_idx].length+1){
-            element.html(text_array[array_idx].substring(0,n));
-            $timeout(function(){
-              scope.typewrite_msgs(element, text_array, array_idx, n+1, loop);
-            }, scope.typeSpeed);
+        scope.typewrite_msgs = function(element, messages, messages_index, n, loop){
+          var end = n + 1;
+          var letter = messages[messages_index].substring(n,end);
+
+          if(n < messages[messages_index].length + 1){
+            if(letter === '<') {
+              var endIcon = messages[messages_index].indexOf('/>') + 2;
+              var icon = messages[messages_index].substring(n,endIcon);
+              element.html(messages[messages_index].substring(0,n));
+              element.append(icon);
+            } else {
+              element.html(messages[messages_index].substring(0,n));
+            }
+            if(typeof icon === 'undefined') {
+              $timeout(function(){
+                scope.typewrite_msgs(element, messages, messages_index, n+1, loop);
+              }, scope.typeSpeed);
+            } else {
+              $timeout(function(){
+                scope.typewrite_msgs(element, messages, messages_index, endIcon+1, loop);
+              }, scope.typeSpeed);
+            }
           }
-          else if(array_idx+1 < text_array.length){
+          else if(messages_index+1 < messages.length){ // LOOPING BACK AROUND
             $timeout(function(){
-              scope.typewrite_msgs(element, text_array, array_idx+1, 0, loop);
+              scope.typewrite_msgs(element, messages, messages_index+1, 0, loop);
             }, scope.loopDelay);
           }
           else if(scope.loop) {
             $timeout(function(){
-              scope.typewrite_msgs(element, text_array, 0, 0, loop);
+              scope.typewrite_msgs(element, messages, 0, 0, loop);
             }, scope.loopDelay);
           }
         }
